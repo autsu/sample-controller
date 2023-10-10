@@ -49,11 +49,15 @@ func main() {
 		klog.Fatalf("Error building kubeconfig: %s", err.Error())
 	}
 
+	// 疑问：kubernetes.NewForConfig 和 clientset.NewForConfig 有什么区别？
+	// kubernetes.NewForConfig 返回的是 kubernetes.Clientset, 这个 Clientset 包含了所有 k8s 标准资源的 client
+	// 但不包含任何自定义资源的 client
 	kubeClient, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
 		klog.Fatalf("Error building kubernetes clientset: %s", err.Error())
 	}
 
+	// 这里的 NewForConfig 是生成的代码，也是一个 client，只不过包含了我们自定义资源 Foo 的 client
 	exampleClient, err := clientset.NewForConfig(cfg)
 	if err != nil {
 		klog.Fatalf("Error building example clientset: %s", err.Error())
@@ -68,6 +72,9 @@ func main() {
 
 	// notice that there is no need to run Start methods in a separate goroutine. (i.e. go kubeInformerFactory.Start(stopCh)
 	// Start method is non-blocking and runs all registered informers in a dedicated goroutine.
+	//
+	// 请注意，无需在单独的 goroutine 中运行 Start 方法。 （即 go kubeInformerFactory.Start(stopCh) Start 方法是非阻塞的，
+	// 并在专用 goroutine 中运行所有注册的通知者。
 	kubeInformerFactory.Start(stopCh)
 	exampleInformerFactory.Start(stopCh)
 

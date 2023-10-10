@@ -1,3 +1,8 @@
+# 流程图
+（PS：该流程图只列出了整体的核心流程，省略了部分相对而言没那么重要的流程；并且该流程图并不规范，但问题不大，只要能知晓整体的工作流程即可）
+
+![](https://raw.githubusercontent.com/autsu/diagrams/master/img/simple_controller.drawio.png)
+
 # sample-controller
 
 This repository implements a simple controller for watching Foo resources as
